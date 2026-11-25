@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data center policy: a redesign concept</title>
+  <meta name="description" content="An unofficial redesign concept of a state data center policy tool. One screen, live results, a link you can share, and a bill library that starts with what matters to you.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#results">Skip to results</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">Data center policy, a redesign concept</p>
+    </div>
+  </header>
+
+  <aside class="notice" aria-label="About this concept">
+    <div class="wrap">
+      <p><strong>This is a concept, not the real tool.</strong> I made it as a design exercise after reviewing the Data Center Policy Navigator from Climate Cabinet Education (tamingdatacenters.com). It only covers Virginia and Texas, and the sample data was copied by hand from the live tool on 25 Nov 2026. I haven't checked it against the original sources, so please don't use it for real decisions.</p>
+    </div>
+  </aside>
+
+  <main id="main">
+    <section class="wrap intro" aria-labelledby="h1">
+      <h1 id="h1">What can your state do about data centers?</h1>
+      <p class="lead">Tell us where you live and what worries you most. The answer shows up below as you go, and you can send it to someone with one link.</p>
+    </section>
+
+    <section class="wrap" aria-labelledby="q-heading">
+      <h2 id="q-heading" class="sr-only">Your situation</h2>
+      <form id="answers" class="card form" novalidate>
+        <fieldset>
+          <legend>1. Which state?</legend>
+          <div class="choices two" id="state-choices"></div>
+          <p class="hint">More states aren't in this concept yet.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. What worries you most?</legend>
+          <p class="hint" id="prio-hint">Pick one or two. Your first pick counts the most.</p>
+          <div class="choices" id="priority-choices" aria-describedby="prio-hint"></div>
+          <p class="hint" id="prio-count" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Is there one project on your mind? <span class="opt">(optional)</span></legend>
+          <label class="sr-only" for="stage">Project stage</label>
+          <select id="stage" name="stage"></select>
+        </fieldset>
+      </form>
+    </section>
+
+    <section id="results" class="wrap results" tabindex="-1" aria-labelledby="r-heading" hidden>
+      <div class="results-top">
+        <h2 id="r-heading">Your starting point</h2>
+        <div class="actions" role="group" aria-label="Share or save these results">
+          <button type="button" id="copy-link" class="btn">Copy link</button>
+          <button type="button" id="print" class="btn">Print or save as PDF</button>
+          <button type="button" id="reset" class="btn ghost">Clear answers</button>
+        </div>
+      </div>
+      <p id="copy-status" class="hint" role="status"></p>
+
+      <p id="summary" class="summary" aria-live="polite"></p>
+
+      <h3>Start here</h3>
+      <ol id="start-here" class="cards"></ol>
+
+      <div class="toggle-row">
+        <button type="button" id="toggle-all" class="btn" aria-expanded="false" aria-controls="all-nine">Show all nine protections</button>
+      </div>
+      <div id="all-nine" hidden></div>
+
+      <details class="how">
+        <summary>How are these ranked?</summary>
+        <p>This is my own simple rule, not Climate Cabinet's method. Each protection gets points for matching what you picked (more for your first pick), more points if your state has nothing in place, fewer if it only has part of it, and none if it's already in place. If you said which stage a project is at, protections for that stage get a small boost. The three highest scores go under "Start here".</p>
+      </details>
+
+      <h3>Where projects stand in <span id="proj-state"></span></h3>
+      <div id="projects"></div>
+
+      <h3 id="bills-heading">Example bills from other states</h3>
+      <p class="hint" id="bills-intro"></p>
+      <div class="filters" role="group" aria-label="Filter bills">
+        <div>
+          <label for="bill-search">Search</label>
+          <input id="bill-search" type="search" placeholder="Word, state or bill number">
+        </div>
+        <div>
+          <label for="bill-status">Status</label>
+          <select id="bill-status">
+            <option value="all">Any status</option>
+            <option value="Passed">Passed</option>
+            <option value="Engrossed">Passed one chamber</option>
+            <option value="Introduced">Introduced</option>
+            <option value="Failed">Failed</option>
+          </select>
+        </div>
+        <div>
+          <label for="bill-sort">Sort by</label>
+          <select id="bill-sort">
+            <option value="match">Best match for me</option>
+            <option value="status">Passed first</option>
+            <option value="state">State, A to Z</option>
+          </select>
+        </div>
+        <div class="check">
+          <input type="checkbox" id="bill-all">
+          <label for="bill-all">Show all bills, not just ones that match</label>
+        </div>
+      </div>
+      <p id="bill-count" class="hint" aria-live="polite"></p>
+      <ul id="bills" class="bills"></ul>
+
+      <h3>Plain-language glossary</h3>
+      <p class="hint">Underlined words in the text above are also clickable.</p>
+      <label for="gloss-search" class="sr-only">Search the glossary</label>
+      <input id="gloss-search" type="search" placeholder="Search terms">
+      <dl id="glossary" class="glossary"></dl>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Data: facility counts, protection status and bill labels come from the live Data Center Policy Navigator (Climate Cabinet Education), which in turn credits FracTracker, Cleanview and LegiScan. Copied by hand on 25 Nov 2026. Short descriptions and bill summaries are my own wording.</p>
+      <p>Two bills, Texas SB 6 and Delaware HB 233, show a status that doesn't match their summary on the original tool. They're marked here until someone checks the source.</p>
+      <p>This page counts a few anonymous actions, like whether results were shown or a link was copied, so the design can be judged on real use. It uses no cookies and sends nothing anywhere. The counts stay in your own browser. <a href="metrics.html">See what gets counted</a>.</p>
+      <p>Built by Osei Akoto Kwarteng as a portfolio project.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="tracker.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
